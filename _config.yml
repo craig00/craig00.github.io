@@ -68,8 +68,8 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
-  repository:  https://github.com/craig00/craig00.github.io.git
+  type: git
+  repo: https://github.com/craig00/craig00.github.io.git
   branch: master
 
 avatar: /images/0.jpg
