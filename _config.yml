@@ -63,6 +63,14 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
+plugin: 
+- hexo-generator-feed
+#feed atom
+feed:
+type: atom
+path: atom.xml
+limit: 20
+
 theme: next
 
 # Deployment
@@ -72,4 +80,17 @@ deploy:
   repo: https://github.com/craig00/craig00.github.io.git
   branch: master
 
-avatar: /images/0.jpg
+avatar: http://omoi0oliz.bkt.clouddn.com/one.jpg
+
+#duoshuo
+duoshuo_shortname: craig00
+
+search:
+  path: search.xml
+  field: post
+  
+sitemap:
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml
+  
