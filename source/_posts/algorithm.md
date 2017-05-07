@@ -13,6 +13,7 @@ tags: [algorithm]
 
 采用类似快速排序算法的思想求解，从数组中随机选择一个数x，将数组分为两部分，一部分都小于x，另一部分都大于等于x.这个数x所在的位置正好是n-K的话，则返回这个数x，不然就继续找。
 
+以下是java代码
 ``` java
 import java.util.*;
 
@@ -59,8 +60,10 @@ public class Finder {
         return j;
     }
 }
-``` 
 
+```
+
+以下是javascript代码
 ``` javascript
 function findKth(array, K) {
   let n = array.length;
@@ -102,5 +105,7 @@ function findKth(array, K) {
 ###  时间复杂度
 
 根据这个算法的过程可以得到如下等式
-$$ T(n) = T(n/2) + O(n) $$
+
+>T(n) = T(n/2) + O(n)
+
 根据主定理可知，T(n) = O(n).
