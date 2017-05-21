@@ -109,3 +109,36 @@ function findKth(array, K) {
 >T(n) = T(n/2) + O(n)
 
 根据主定理可知，T(n) = O(n).
+
+同样也可以利用堆排序来做，虽然时间复杂度会是O(nKlogK);
+```javascript
+function findKth(array, K) {
+  let cc = array.slice(0, K);
+  cc.sort((a, b) => a - b);
+  for (var i = K; i < array.length; i++) {
+    if (array[i] > cc[0]) {
+      cc[0] = array[i];
+      for (var j = cc.length - 1; j > 0; j--) {
+        cc = adjustHeap(cc, j);
+        [cc[j], cc[0]] = [cc[0], cc[j]];
+      }
+    }
+  }
+  console.log(cc[0]);
+
+  function adjustHeap(arr, j) {
+    if (j == 0) return arr;
+    let end = parseInt((j - 1) / 2);
+    for (let i = end; i >= 0; i--) {
+      if (arr[2 * i + 1] && arr[2 * i + 1] > arr[i]) {
+        [arr[2 * i + 1], arr[i]] = [arr[i], arr[2 * i + 1]];
+      }
+      if ((2 * i + 2) <= j && arr[2 * i + 2] && arr[2 * i + 2] > arr[i]) {
+        [arr[2 * i + 2], arr[i]] = [arr[i], arr[2 * i + 2]];
+      }
+    }
+    return arr;
+  }
+
+}
+```
