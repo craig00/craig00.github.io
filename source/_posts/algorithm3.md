@@ -10,7 +10,7 @@ tags: [algorithm]
 
 Array.sort方法重新理解：传入的比较函数有点纯函数的意味---compareFunction(a, b) must always return the same value when given a specific pair of elements a and b as its two arguments.
 
-另外sort是根据返回的结果result进行排序，如果result==-1，就升序，result==1，就降序，result==0就按默认的规则排序。
+另外sort是根据返回的结果result进行排序，如果result<0，就升序，result>0，就降序，result==0就按默认的规则排序。
 
 所以这一题的思路没什么特殊，就是取全排列然后再排序。
 
