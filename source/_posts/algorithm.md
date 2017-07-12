@@ -128,15 +128,18 @@ function findKth(array, K) {
     function adjustHeap(arr, j) {
         if (j == 0) return arr;
         let end = parseInt((j - 1) / 2);
-        for (let i = end; i >= 0; i--) {
-            if (arr[2 * i + 1] && arr[2 * i + 1] > arr[i]) {
-                [arr[2 * i + 1], arr[i]] = [arr[i], arr[2 * i + 1]];
+        for (let i = end; i >= 0; i = end) {
+            let large = 2 * i + 1;
+            //先找出孩子节点的较大者
+            if (2 * i + 2 <= j && arr[2 * i + 2] && arr[2 * i + 2] > arr[2 * i + 1]) large = 2 * i + 2;
+            if (arr[large] > arr[i]) {
+                [arr[large], arr[i]] = [arr[i], arr[large]];
+                end = Math.floor((i - 1) / 2);
+            }else{
+                break;
             }
-            if (2 * i + 2 <= j && arr[2 * i + 2] && arr[2 * i + 2] > arr[i]) {
-                [arr[2 * i + 2], arr[i]] = [arr[i], arr[2 * i + 2]];
-            }
+            
         }
-        return arr;
     }
 }
 ```
