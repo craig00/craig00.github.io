@@ -112,33 +112,34 @@ function findKth(array, K) {
 
 同样也可以利用堆排序来做，虽然时间复杂度会是O(nKlogK);
 ```javascript
+// 找出第K大的数
 function findKth(array, K) {
     let cc = array.slice(0, K);
-    cc.sort((a, b) => b - a); //偷懒，排成一个大顶堆
+
+    //排成一个小顶堆,这里是自底向上
+    for (let i = parseInt((cc.length - 2) / 2); i >= 0; i--) {
+        adjustHeap(cc, i);
+    }
+
     for (let i = K; i < array.length; i++) {
-        if (array[i] > cc[K - 1]) {
-            cc[K - 1] = array[i];
-            for (let j = cc.length - 1; j > 0; j--) {
-                adjustHeap(cc, j); // 重新调整为大顶堆，一个元素从下往上走，最多logK次。
-                [cc[j], cc[0]] = [cc[0], cc[j]];
-            }
+        if (array[i] > cc[0]) {
+            cc[0] = array[i];
+            adjustHeap(cc, 0);
         }
     }
     console.log(cc[0]);
+
+    // 调整堆，从上往下
     function adjustHeap(arr, j) {
-        if (j == 0) return arr;
-        let end = parseInt((j - 1) / 2);
-        for (let i = end; i >= 0; i = end) {
-            let large = 2 * i + 1;
-            //先找出孩子节点的较大者
-            if (2 * i + 2 <= j && arr[2 * i + 2] && arr[2 * i + 2] > arr[2 * i + 1]) large = 2 * i + 2;
-            if (arr[large] > arr[i]) {
-                [arr[large], arr[i]] = [arr[i], arr[large]];
-                end = Math.floor((i - 1) / 2);
-            }else{
-                break;
+        let min;
+        for (let i = j; i <= parseInt((arr.length - 2) / 2); i = min) {
+            min = 2 * i + 1;
+            if (arr[2 * i + 2] && arr[2 * i + 2] < arr[2 * i + 1]) {
+                min = 2 * i + 2;
             }
-            
+            if (arr[i] > arr[min]) {
+                [arr[i], arr[min]] = [arr[min], arr[i]];
+            } else break;
         }
     }
 }
