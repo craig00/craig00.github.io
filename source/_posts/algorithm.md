@@ -110,7 +110,7 @@ function findKth(array, K) {
 
 根据主定理可知，T(n) = O(n).
 
-同样也可以利用堆排序来做，虽然时间复杂度会是O(nKlogK);
+同样也可以利用堆排序来做，虽然时间复杂度会是O(nlogK);
 ```javascript
 // 找出第K大的数
 function findKth(array, K) {
