@@ -40,16 +40,19 @@ function recurse(cc, arr, num) {
 ### 最大子段和问题
 
 ```javascript
-function maxSum(arr) {
-    let sum = 0, a = 0;
-    for (let i = 0; i < arr.length; i++) {
+function max(arr) {
+    var sum, a = 0;
+    for (var i = 0; i < arr.length; i++) {
         if (a > 0) {
             a = a + arr[i];
         } else {
-            a = arr[i]; //这里可以记录开始位置
+            a = arr[i];
+        }
+        if (sum === undefined) {//原来初始化为0，没有考虑开始就是负数的情况。牛客的test case只过了83%
+            sum = a;
         }
         if (a > sum) {
-            sum = a; //这里可以记录结束位置
+            sum = a;
         }
     }
     return sum;
