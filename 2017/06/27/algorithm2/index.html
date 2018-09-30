@@ -671,14 +671,15 @@
 
   <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
   <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.10.0/js/md5.js"></script>
    <script type="text/javascript">
         var gitalk = new Gitalk({
           clientID: '9be49121e2cd0c1a82b4',
-          clientSecret: '2f5a16c7836d1a954b6c6f6afb9ff9d8d9b2892c',
+          clientSecret: '5b1659346e358ab6d8e746c213d97aeb290034d4',
           repo: 'craig00.github.io',
           owner: 'craig00',
           admin: ['craig00'],
-          id: location.pathname.slice(0,48),
+          id: md5(location.pathname),
           distractionFreeMode: 'true'
         })
         gitalk.render('gitalk-container')
