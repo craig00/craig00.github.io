@@ -1,0 +1,910 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="translation," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Craig's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="原文链接  什么是 service workerservice worker 是 web worker 的一种。它本质上是一个 javaScript 文件独立运行于浏览器主线程之外，可以拦截网络请求，可以在缓存中缓存或取回资源，还可以分发推送消息。 因为 workers 独立运行于主线程之外，所以 service workers 和与它相关联的应用是互相独立的。因此有如下结果：  因为 serv">
+<meta name="keywords" content="translation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Service Workers 介绍 [译]">
+<meta property="og:url" content="https://craig00.github.io/2018/09/30/[译] Service Workers 介绍/index.html">
+<meta property="og:site_name" content="Craig&#39;s Blog">
+<meta property="og:description" content="原文链接  什么是 service workerservice worker 是 web worker 的一种。它本质上是一个 javaScript 文件独立运行于浏览器主线程之外，可以拦截网络请求，可以在缓存中缓存或取回资源，还可以分发推送消息。 因为 workers 独立运行于主线程之外，所以 service workers 和与它相关联的应用是互相独立的。因此有如下结果：  因为 serv">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-30T08:59:33.822Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Service Workers 介绍 [译]">
+<meta name="twitter:description" content="原文链接  什么是 service workerservice worker 是 web worker 的一种。它本质上是一个 javaScript 文件独立运行于浏览器主线程之外，可以拦截网络请求，可以在缓存中缓存或取回资源，还可以分发推送消息。 因为 workers 独立运行于主线程之外，所以 service workers 和与它相关联的应用是互相独立的。因此有如下结果：  因为 serv">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Service Workers 介绍 [译] | Craig's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Craig's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Service Workers 介绍 [译]
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-09-30T16:31:58+08:00" content="2018-09-30">
+              2018-09-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/translation/" itemprop="url" rel="index">
+                    <span itemprop="name">translation</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/09/30/[译] Service Workers 介绍/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/09/30/[译] Service Workers 介绍/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><a href="https://developers.google.com/web/ilt/pwa/introduction-to-service-worker" target="_blank" rel="noopener">原文链接</a></p>
+</blockquote>
+<h1 id="什么是-service-worker"><a href="#什么是-service-worker" class="headerlink" title="什么是 service worker"></a>什么是 service worker</h1><p>service worker 是 web worker 的一种。它本质上是一个 javaScript 文件独立运行于浏览器主线程之外，可以拦截网络请求，可以在缓存中缓存或取回资源，还可以分发推送消息。</p>
+<p>因为 workers 独立运行于主线程之外，所以 service workers 和与它相关联的应用是互相独立的。因此有如下结果：</p>
+<ul>
+<li>因为 service worker 不是同步的（它被设计成异步的），所以 <code>localStorage</code> 在 service worker 中不能被使用。</li>
+<li>service worker 可以在 app 不是活跃状态下接收来自服务器的推送消息。这个特性甚至可以让你的 app 在没有被浏览器打开的情况下，向用户展示推送通知。</li>
+<li>service worker 不能直接接触 DOM。如果需要和页面进行通信，那么 service worker 可以使用 <code>postMessage()</code> 来发送数据，另外通过监听 “message” 事件来接收数据。</li>
+</ul>
+<blockquote>
+<p>注意：当浏览器没有运行的时候，通知消息是否被接收取决于浏览器和操作系统的交互方式。比如在桌面操作系统中，Chrome 和 Firefox 只有在浏览器打开的时候才能接收通知消息。然而，Android 是被设计成在接收推送消息时可以唤醒浏览器，并且总是接收推送消息，无论浏览器是什么状态。在<a href="https://web-push-book.gauntface.com/" target="_blank" rel="noopener">这本书</a>的 <a href="https://web-push-book.gauntface.com/chapter-07/01-faq/#why-doesnt-push-work-when-the-browser-is-closed" target="_blank" rel="noopener">FAQ</a> 中可以查看更多信息。</p>
+</blockquote>
+<p>使用 service worker 需要注意以下内容：</p>
+<ul>
+<li>service worker 是一个可编程的网络代理，能够控制网页中的网络请求是如何被处理的。</li>
+<li>service worker 只运行在 https 中。因为 service worker 可以拦截网络请求和修改应答，所以中间人攻击很难实施。</li>
+<li>service worker 在不工作的时候会停下来，然后在需要的时候重新开始工作。在此过程中，你不能依靠全局变量来保存状态信息。如果你有这个需求，推荐使用 IndexedDB 数据库。</li>
+<li>service worker 广泛使用了 promises，如果你对 promises 不熟悉的话，推荐阅读 <a href="https://developers.google.com/web/fundamentals/primers/promises" target="_blank" rel="noopener">Promises, an introduction.</a></li>
+</ul>
+<h1 id="service-worker-能做什么"><a href="#service-worker-能做什么" class="headerlink" title="service worker 能做什么"></a>service worker 能做什么</h1><p>service worker 使得 apps 可以控制网络请求，缓存请求结果来改进性能并且提供了缓存资源的离线访问方式。</p>
+<p>service worker 利用两个 API 使得一个应用可以被离线使用：Fetch （网络请求资源的标准实现）和 Cache （应用数据的持久化存储）。Cache 是持久化的，并且与浏览器缓存和网络状态不相关。</p>
+<h2 id="为应用-站点改进性能"><a href="#为应用-站点改进性能" class="headerlink" title="为应用/站点改进性能"></a>为应用/站点改进性能</h2><p>缓存资源将使得内容在大多数网络条件下加载更快。在<a href="https://developers.google.com/web/ilt/pwa/lab-caching-files-with-service-worker" target="_blank" rel="noopener">Caching files with the service</a> 和 <a href="https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/" target="_blank" rel="noopener">The offline cookbook</a> 查看更多内容。</p>
+<h2 id="离线可用优先"><a href="#离线可用优先" class="headerlink" title="离线可用优先"></a>离线可用优先</h2><p>在 service worker 中使用 Fetch API，我们可以拦截网络请求，也可以使用请求资源之外的内容来修改响应。我们使用这项技术可以保证用户离线的情况下依然可以使用服务。</p>
+<h2 id="高级功能的基础"><a href="#高级功能的基础" class="headerlink" title="高级功能的基础"></a>高级功能的基础</h2><p>service worker 是其他功能的基础，由此才得以让 web app 像原生应用一样工作。部分高级功能如下：</p>
+<ul>
+<li>Notifications API： 使用操作系统本地的通知系统向用户展示通知并进行交互。</li>
+<li>Push API：这个 API 使得你的应用可以订阅推送服务和接收推送消息。推送消息会由 Service Worker 处理，可以用来更新本地状态，也可以用来展示系统通知。由于 Service Worker 的运行不依赖于应用本身，所以它可以在浏览器没有运行的时候接收消息通知。</li>
+<li>Background Sync API：这个 API 可以在用户网络条件不好的时候收集用户需要发送的内容，然后等到网络条件良好的时候再发送。这个 API 还可以接收服务器的定时更新，从而使得应用可以在下次打开时进行更新操作。</li>
+<li>Channel Messaging API：这个 API 让 Web Worker、Service Worker 和主应用可以互相传递消息。这个 API 可以用于新内容通知和软件更新等与用户有交互的操作。</li>
+</ul>
+<h1 id="service-worker-生命周期"><a href="#service-worker-生命周期" class="headerlink" title="service worker 生命周期"></a>service worker 生命周期</h1><p>service worker 在它的生命周期内会经历以下3步：</p>
+<ul>
+<li>注册</li>
+<li>安装</li>
+<li>激活</li>
+</ul>
+<h2 id="注册和作用域"><a href="#注册和作用域" class="headerlink" title="注册和作用域"></a>注册和作用域</h2><p>在 <strong>安装</strong> 一个 service worker 之前，你需要在你的代码中进行 <strong>注册</strong> 。注册的生命周期是告诉浏览器 Service Worker 位于何处，然后在后台开始安装。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"><span class="keyword">if</span> (<span class="string">'serviceWorker'</span> <span class="keyword">in</span> navigator) &#123;</span><br><span class="line">  navigator.serviceWorker.register(<span class="string">'/service-worker.js'</span>)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">registration</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Registration successful, scope is:'</span>, registration.scope);</span><br><span class="line">  &#125;)</span><br><span class="line">  .catch(<span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Service worker registration failed, error:'</span>, error);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码开始处对 <code>navigator.serviceWorker</code> 进行了浏览器支持性检测。然后使用 <code>navigator.serviceWorker.register</code> 进行了注册，如果注册成功，那么将返回一个 resolve 状态的 promise。service worker 的 <code>scope</code> 记录在 <code>registration.scope</code>。</p>
+<p><code>scope</code> 代表 service worker 可以控制哪些文件，也就是说，service worker 可以控制哪些路径下的网络请求。默认路径是 service worker 文件所在的位置，以及其中所包含的所有路径。所以 <strong>service-worker.js</strong> 如果在根目录下，那么 service worker 可以控制这个域下的所有请求。</p>
+<p>另外，还可以通过传递一个参数来指定，例如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line">navigator.serviceWorker.register(<span class="string">'/service-worker.js'</span>, &#123;</span><br><span class="line">  scope: <span class="string">'/app/'</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>在这个例子中，service worker 的作用域被设置为 <code>/app/</code>，所以这就意味着 service worker 可以控制请求来自 <code>/app/</code>，<code>/app/lower/</code> 或 <code>/app/lower/lower</code>，但是来自更高级别的目录则不行，如<code>/app</code> 或 <code>/</code>。</p>
+<p>如果 service worker 已经被注册了，那么 <code>navigator.serviceWorker.register</code> 返回当前活跃的 service worker 注册对象。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>一旦浏览器注册了一个 service worker，那么 <strong>安装</strong> 工作将会开始，只要 service worker 被浏览器认为是新的，即当前站点没有安装过 service worker，或新旧 service worker 之间有任何一字节的不同。</p>
+<p>安装一个 service worker 会触发 <code>install</code> 事件。在 service worker 安装过程中可以通过 <code>install</code> 的事件监听器来开展一些额外的工作。例如，在安装过程中，service worker 可以预缓存 web app 的一部分内容，从而在用户下次打开的时候可以快速响应。所以在首次加载后，重复加载的资源的响应速度会很快，用户体验会变得更好。示例代码如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// service-worker.js</span></span><br><span class="line"><span class="comment">// Listen for install event, set callback</span></span><br><span class="line">self.addEventListener(<span class="string">'install'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// Perform some task</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="激活"><a href="#激活" class="headerlink" title="激活"></a>激活</h2><p>一旦 service worker 成功安装，那么将进入 <strong>激活</strong> 阶段。如果有些页面是被旧的 service worker 控制，那么新的 service worker 会进入 <code>waiting</code> 状态。新的 service worker 只有等到没有页面被旧的 service worker 控制的时候才会被激活。这保证了任何时候只有一个版本的 service worker 在运行。</p>
+<blockquote>
+<p>注意：简单地刷新页面是不足以将控制权转交给新的 service worker，因为在卸载当前页面之前，新页面会被请求，所以任何时间内旧的 service worker 都在被使用中。</p>
+</blockquote>
+<p>当新 service worker 激活的时候，<code>activate</code> 事件会被触发。可以利用这个事件来清理过期的缓存。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// service-worker.js</span></span><br><span class="line">self.addEventListener(<span class="string">'activate'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Perform some task</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>一旦激活，service worker 会控制其作用域下的所有页面，并且开始监听这些页面的事件。然而，在激活之前加载的页面将不会受新的 service worker 的控制。新的 service worker 只有在关闭或重启应用，或调用 <code>clients.claim()</code> 才能掌握控制权。在此之前，这些页面的请求都将不会被新的 service worker 拦截。这其实是一种方法来保证站点前后统一。</p>
+<h1 id="service-worker-事件"><a href="#service-worker-事件" class="headerlink" title="service worker 事件"></a>service worker 事件</h1><p>service worker 是事件驱动的。安装和激活的时候会分别触发 <code>install</code> 和 <code>activate</code> 事件，此外还有其他事件 Service Worker 也能进行响应，比如 <code>fetch</code>、<code>push</code>、<code>sync</code> 和 <code>message</code> 等，其中 <code>message</code> 是 service worker 用来和其他脚本通信用的。</p>
+<p>要想检查 service worker，可以在浏览器的开发者工具中查看。这个过程由于各浏览器的实现不同而可能有所差异。更多信息可查看<a href="https://developers.google.com/web/ilt/pwa/tools-for-pwa-developers/" target="_blank" rel="noopener">工具使用链接</a></p>
+<h1 id="深入阅读"><a href="#深入阅读" class="headerlink" title="深入阅读"></a>深入阅读</h1><ul>
+<li>service worker <a href="https://developers.google.com/web/fundamentals/instant-and-offline/service-worker/lifecycle" target="_blank" rel="noopener">生命周期的详细介绍</a></li>
+<li>service worker <a href="https://developers.google.com/web/fundamentals/instant-and-offline/service-worker/registration" target="_blank" rel="noopener">注册</a></li>
+<li><a href="https://developers.google.com/web/ilt/pwa/lab-scripting-the-service-worker" target="_blank" rel="noopener">Create your own service worker</a></li>
+<li><a href="https://developers.google.com/web/ilt/pwa/lab-offline-quickstart" target="_blank" rel="noopener">Take a blog site offline</a></li>
+<li><a href="https://developers.google.com/web/ilt/pwa/lab-caching-files-with-service-worker" target="_blank" rel="noopener">Cache files with Service Worker</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/translation/" rel="tag">#translation</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/06/algorithm3/" rel="next" title="algorithm---3">
+                <i class="fa fa-chevron-left"></i> algorithm---3
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+     <section id="comments">
+   <!-- 多说评论框 start -->
+<div id="ds-thread" class="ds-thread" data-thread-key="2018/09/30/[译] Service Workers 介绍/" data-title="Service Workers 介绍 [译]" data-url="https://craig00.github.io/2018/09/30/[译] Service Workers 介绍/" }}"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shortTime"};
+  (function() {
+var ds = document.createElement('script');
+ds.type = 'text/javascript';ds.async = true;
+ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+ds.charset = 'UTF-8';
+(document.getElementsByTagName('head')[0] 
+ || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://omoi0oliz.bkt.clouddn.com/one.jpg"
+               alt="Craig Chen" />
+          <p class="site-author-name" itemprop="name">Craig Chen</p>
+          <p class="site-description motion-element" itemprop="description">programmer</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/craig00" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/loveisyours/" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-https://shinpachi8.github.io/assets/img/shinpachi.jpg"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://shinpachi8.github.io" title="Shinpachi8" target="_blank">Shinpachi8</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是-service-worker"><span class="nav-number">1.</span> <span class="nav-text">什么是 service worker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#service-worker-能做什么"><span class="nav-number">2.</span> <span class="nav-text">service worker 能做什么</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为应用-站点改进性能"><span class="nav-number">2.1.</span> <span class="nav-text">为应用/站点改进性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#离线可用优先"><span class="nav-number">2.2.</span> <span class="nav-text">离线可用优先</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高级功能的基础"><span class="nav-number">2.3.</span> <span class="nav-text">高级功能的基础</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#service-worker-生命周期"><span class="nav-number">3.</span> <span class="nav-text">service worker 生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#注册和作用域"><span class="nav-number">3.1.</span> <span class="nav-text">注册和作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">3.2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激活"><span class="nav-number">3.3.</span> <span class="nav-text">激活</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#service-worker-事件"><span class="nav-number">4.</span> <span class="nav-text">service worker 事件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深入阅读"><span class="nav-number">5.</span> <span class="nav-text">深入阅读</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Craig Chen</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div style="margin:-20px;position: absolute;right:265px;">
+<dl style="float:left">
+  <dt style="float:left">
+    <dd style="float:left;width:300px">
+      <span style="float:right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</span>
+      <span style="float:right">本站总访问量<span><span style="float:right" id="busuanzi_value_site_pv"></span>
+    </dd>
+  </dt>
+  <dt style="float:left;width:300px">
+    <dd>
+      <span style="float:left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <span style="float:left">您是第</span>
+      <span style="float:left" id="busuanzi_value_site_uv"></span>
+      <span style="float:left">个小伙伴</span>
+    </dd>
+  </dt>
+</dl>
+</div>
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"craig00"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>
