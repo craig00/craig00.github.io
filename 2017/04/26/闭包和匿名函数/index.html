@@ -713,7 +713,7 @@ b() <span class="comment">// this is window, because there is nothing to the lef
           repo: 'craig00.github.io',
           owner: 'craig00',
           admin: ['craig00'],
-          id: location.pathname,
+          id: location.pathname.slice(0,48),
           distractionFreeMode: 'true'
         })
         gitalk.render('gitalk-container')
