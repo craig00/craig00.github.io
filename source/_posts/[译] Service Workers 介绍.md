@@ -1,5 +1,5 @@
 ---
-title: [译] Service Workers 介绍
+title: Service Workers 介绍 [译]
 date: 2018-09-30 16:31:58
 categories: translation
 tags: [translation]
@@ -14,7 +14,8 @@ service worker 是 web worker 的一种。它本质上是一个 javaScript 文�
 因为 workers 独立运行于主线程之外，所以 service workers 和与它相关联的应用是互相独立的。因此有如下结果：
 - 因为 service worker 不是同步的（它被设计成异步的），所以 `localStorage` 在 service worker 中不能被使用。
 - service worker 可以在 app 不是活跃状态下接收来自服务器的推送消息。这个特性甚至可以让你的 app 在没有被浏览器打开的情况下，向用户展示推送通知。
-- service worker 不能直接接触 DOM。如果需要和页面进行通信，那么 service worker 可以使用 `postMessage()` 来发送数据，另外通过监听 "message" 事件来接收数据。  
+- service worker 不能直接接触 DOM。如果需要和页面进行通信，那么 service worker 可以使用 `postMessage()` 来发送数据，另外通过监听 "message" 事件来接收数据。
+
 > 注意：当浏览器没有运行的时候，通知消息是否被接收取决于浏览器和操作系统的交互方式。比如在桌面操作系统中，Chrome 和 Firefox 只有在浏览器打开的时候才能接收通知消息。然而，Android 是被设计成在接收推送消息时可以唤醒浏览器，并且总是接收推送消息，无论浏览器是什么状态。在[这本书](https://web-push-book.gauntface.com/)的 [FAQ](https://web-push-book.gauntface.com/chapter-07/01-faq/#why-doesnt-push-work-when-the-browser-is-closed) 中可以查看更多信息。
 
 使用 service worker 需要注意以下内容：
