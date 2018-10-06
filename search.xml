@@ -4,6 +4,30 @@
   
     
     <entry>
+      <title><![CDATA[使用Fetch [译]]]></title>
+      <url>https://craig00.github.io/2018/10/06/%5B%E8%AF%91%5D%20%E4%BD%BF%E7%94%A8Fetch/</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><a href="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" target="_blank" rel="noopener">原文链接</a></p>
+</blockquote>
+<img src="/2018/10/06/[译]%20使用Fetch/High-Sierra.jpg" title="This is an example image">
+<h1 id="fetch-是什么"><a href="#fetch-是什么" class="headerlink" title="fetch 是什么"></a>fetch 是什么</h1>]]></content>
+      
+        <categories>
+            
+            <category> translation </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> translation </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Service Workers 介绍 [译]]]></title>
       <url>https://craig00.github.io/2018/09/30/%5B%E8%AF%91%5D%20Service%20Workers%20%E4%BB%8B%E7%BB%8D/</url>
       <content type="html"><![CDATA[<blockquote>

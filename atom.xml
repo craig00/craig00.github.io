@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://craig00.github.io/"/>
-  <updated>2018-09-30T11:32:25.932Z</updated>
+  <updated>2018-10-06T11:30:56.805Z</updated>
   <id>https://craig00.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用Fetch [译]</title>
+    <link href="https://craig00.github.io/2018/10/06/%5B%E8%AF%91%5D%20%E4%BD%BF%E7%94%A8Fetch/"/>
+    <id>https://craig00.github.io/2018/10/06/[译] 使用Fetch/</id>
+    <published>2018-10-06T10:01:02.000Z</published>
+    <updated>2018-10-06T11:30:56.805Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p><a href="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" target="_blank" rel="noopener">原文链接</a></p></blockquote><img src="/2018/10/06/[译]%20使用Fetch/High-Sierra.jpg" title="This is an example image"><h1 id="fetch-是什么"><a href="#fetch-是什么" class="headerlink" title="fetch 是什么"></a>fetch 是什么</h1>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;原文链接&lt;/a&gt;&lt;/p&gt;
+&lt;
+      
+    
+    </summary>
+    
+      <category term="translation" scheme="https://craig00.github.io/categories/translation/"/>
+    
+    
+      <category term="translation" scheme="https://craig00.github.io/tags/translation/"/>
+    
+  </entry>
   
   <entry>
     <title>Service Workers 介绍 [译]</title>
