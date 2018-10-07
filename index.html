@@ -331,12 +331,10 @@
 
       
         
-          
-          
-原文链接
-
-
-fetch 是什么
+          <blockquote>
+<p><a href="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" target="_blank" rel="noopener">原文链接</a></p>
+</blockquote>
+<h1 id="fetch-是什么"><a href="#fetch-是什么" class="headerlink" title="fetch 是什么"></a>fetch 是什么</h1><p>Fetch API 是一个简单的获取资源的接口。比起以前的 XMLHttpRequest 经常需要额外的逻辑处理（例如处理重定向），Fetch 使得发起网络请求和处理响应变得更简单。<br>
           
 
           <div class="post-more-link text-center">
@@ -462,6 +460,8 @@ fetch 是什么
 <li>因为 service worker 不是同步的（它被设计成异步的），所以 <code>localStorage</code> 在 service worker 中不能被使用。</li>
 <li>service worker 可以在 app 不是活跃状态下接收来自服务器的推送消息。这个特性甚至可以让你的 app 在没有被浏览器打开的情况下，向用户展示推送通知。</li>
 <li>service worker 不能直接接触 DOM。如果需要和页面进行通信，那么 service worker 可以使用 <code>postMessage()</code> 来发送数据，另外通过监听 “message” 事件来接收数据。
+          
+
           <div class="post-more-link text-center">
             <a class="btn" href="/2018/09/30/[译] Service Workers 介绍/#more" rel="contents">
               阅读全文 &raquo;
