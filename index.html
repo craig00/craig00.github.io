@@ -269,6 +269,144 @@
             
               
                 
+                <a class="post-title-link" href="/2018/10/09/[译] PWA 架构介绍/" itemprop="url">
+                  PWA 架构介绍 [译]
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-10-09T17:21:58+08:00" content="2018-10-09">
+              2018-10-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/translation/" itemprop="url" rel="index">
+                    <span itemprop="name">translation</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p><a href="https://developers.google.com/web/ilt/pwa/introduction-to-progressive-web-app-architectures" target="_blank" rel="noopener">原文链接</a></p>
+</blockquote>
+<p>渐进式 Web Apps （ PWA ）使用现代 Web 功能提供快速、具有用户粘性和可靠的移动网络体验，这对于用户和企业来说都是十分有益的。</p>
+<p>这份文档描述了一些架构和技术，这些内容可以让你的应用支持离线可用、后台同步和推送通知。这些功能原本都是本地应用才能有的体验。</p>
+<h1 id="service-worker-和-application-shell-造就的瞬间加载"><a href="#service-worker-和-application-shell-造就的瞬间加载" class="headerlink" title="service worker 和 application shell 造就的瞬间加载"></a>service worker 和 application shell 造就的瞬间加载</h1><p>PWA 融合了很多本地应用和 Web 的优点。PWA 从浏览器标签下的页面发展为沉浸式应用，仅仅是用了普通的 HTML 和 Javascript，并且进一步增强，为用户提供了一流的类似本地应用的体验。</p>
+<p>即使用户离线或者网络不可靠的情况下，PWA 也能提供快速体验。另外，PWA 有很大潜力去融合之前只属于本地应用的功能，比如推送消息。开发一个离线可用且性能优异的 Web 应用主要依靠 service worker 和客户端存储 API （例如，Cache Storage API 或 IndexedDB ） 的混合使用。</p>
+<p><strong>service woker</strong> ：得益于 service worker 可以使用缓存和存储 API ，所以 PWA 可以预缓存一部分 Web 应用的数据，从而在用户下次开启时可以快速加载。使用 service worker 可以让你的 Web 应用拦截或处理网络请求，包括管理各种缓存，最小化数据传输，和保存用户离线操作的数据直至重新上线。这样的缓存机制可以让开发者集中关注速度，使得本地应用上常见的瞬时加载和定期更新同样出现在 PWA 上。如果你不熟悉 service worker，请阅读之前的文章。</p>
+<p>service worker 不需要用户操作，不需要在打开的页面中也能执行自身的功能。这就催生出了新服务，比如推送消息或离线采集用户操作然后上线再发送。（这不太可能使你的应用程序膨胀，因为浏览器会根据需要启动和停止 service worker 来管理内存）</p>
+<p>service worker 提供的服务如下：</p>
+<ul>
+<li><p>拦截 HTTP/HTTPS 请求，因此你的应用可以从缓存、本地存储或网络中做出决定来提供什么样的服务。</p>
+<p>service worker 不能接触 DOM 但是它可以使用 Cache Storage API，使用 Fetch API 来发送网络请求，使用 IndexedDB API 来做持久化存储。除去拦截网络请求，service worker 还可以使用 <code>postMessage()</code> 来和其他 service worker 和它控制的页面进行通信。（例如要求更新 DOM ）  </p>
+</li>
+<li><p>从服务器接受推送消息</p>
+<p>service worker 独立运行于其他 Web 应用之外，并提供底层操作系统的钩子。它能响应来自操作系统的事件，包括推送消息。</p>
+</li>
+<li><p>让用户在离线情况下依然可以使用 PWA 应用，直到浏览器恢复网络才执行一系列用户的操作。（这也就是后台同步）</p>
+<p>将 service worker 想象成应用的管家，被需要的时候就会醒过来，然后执行任务。实际上，service worker 是浏览器的后台事件处理程序。service worker 的生命周期比较短。它只会在接收到事件的时候醒来，然后只运行必要的时间去处理这个事件。</p>
+</li>
+</ul>
+<p>缓存的概念是令人兴奋的，因为这可以让用户体验离线操作，而且给了开发者足够的控制权去控制什么是真正的离线体验。但是，为了充分发挥 service worker 的优点并融入越来越多的 PWA 功能，是需要一个新思路，即利用 application shell 的架构来创建 Web 站点。</p>
+          
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2018/10/09/[译] PWA 架构介绍/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/10/06/[译] 使用Fetch/" itemprop="url">
                   使用Fetch [译]
                 </a>
@@ -1130,7 +1268,7 @@ Array.sort方法重新理解：传入的比较函数有点纯函数的意味—c
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

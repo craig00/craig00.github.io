@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="algorithm," />
+  <meta name="keywords" content="translation," />
 
 
 
@@ -86,20 +86,18 @@
 
 
 
-<meta name="description" content="主定理（MasterTheorem）设a≥1，b&amp;gt;1为常数，f(n) 为函数，T(n) 为非负整数，且T(n) = aT(n/b) + f(n) 则有以下结果： 找出n个数中第K大的数采用类似快速排序算法的思想求解，从数组中随机选择一个数x，将数组分为两部分，一部分都小于x，另一部分都大于等于x.这个数x所在的位置正好是n-K的话，则返回这个数x，不然就继续找。 以下是java代码12345">
-<meta name="keywords" content="algorithm">
+<meta name="description" content="原文链接  渐进式 Web Apps （ PWA ）使用现代 Web 功能提供快速、具有用户粘性和可靠的移动网络体验，这对于用户和企业来说都是十分有益的。 这份文档描述了一些架构和技术，这些内容可以让你的应用支持离线可用、后台同步和推送通知。这些功能原本都是本地应用才能有的体验。 service worker 和 application shell 造就的瞬间加载PWA 融合了很多本地应用和 W">
+<meta name="keywords" content="translation">
 <meta property="og:type" content="article">
-<meta property="og:title" content="algorithm---1">
-<meta property="og:url" content="https://craig00.github.io/2017/05/07/algorithm/index.html">
+<meta property="og:title" content="PWA 架构介绍 [译]">
+<meta property="og:url" content="https://craig00.github.io/2018/10/09/[译] PWA 架构介绍/index.html">
 <meta property="og:site_name" content="Craig&#39;s Blog">
-<meta property="og:description" content="主定理（MasterTheorem）设a≥1，b&amp;gt;1为常数，f(n) 为函数，T(n) 为非负整数，且T(n) = aT(n/b) + f(n) 则有以下结果： 找出n个数中第K大的数采用类似快速排序算法的思想求解，从数组中随机选择一个数x，将数组分为两部分，一部分都小于x，另一部分都大于等于x.这个数x所在的位置正好是n-K的话，则返回这个数x，不然就继续找。 以下是java代码12345">
+<meta property="og:description" content="原文链接  渐进式 Web Apps （ PWA ）使用现代 Web 功能提供快速、具有用户粘性和可靠的移动网络体验，这对于用户和企业来说都是十分有益的。 这份文档描述了一些架构和技术，这些内容可以让你的应用支持离线可用、后台同步和推送通知。这些功能原本都是本地应用才能有的体验。 service worker 和 application shell 造就的瞬间加载PWA 融合了很多本地应用和 W">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://omoi0oliz.bkt.clouddn.com/algorithm.png">
-<meta property="og:updated_time" content="2018-09-30T08:51:14.253Z">
+<meta property="og:updated_time" content="2018-10-09T13:37:18.703Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="algorithm---1">
-<meta name="twitter:description" content="主定理（MasterTheorem）设a≥1，b&amp;gt;1为常数，f(n) 为函数，T(n) 为非负整数，且T(n) = aT(n/b) + f(n) 则有以下结果： 找出n个数中第K大的数采用类似快速排序算法的思想求解，从数组中随机选择一个数x，将数组分为两部分，一部分都小于x，另一部分都大于等于x.这个数x所在的位置正好是n-K的话，则返回这个数x，不然就继续找。 以下是java代码12345">
-<meta name="twitter:image" content="http://omoi0oliz.bkt.clouddn.com/algorithm.png">
+<meta name="twitter:title" content="PWA 架构介绍 [译]">
+<meta name="twitter:description" content="原文链接  渐进式 Web Apps （ PWA ）使用现代 Web 功能提供快速、具有用户粘性和可靠的移动网络体验，这对于用户和企业来说都是十分有益的。 这份文档描述了一些架构和技术，这些内容可以让你的应用支持离线可用、后台同步和推送通知。这些功能原本都是本地应用才能有的体验。 service worker 和 application shell 造就的瞬间加载PWA 融合了很多本地应用和 W">
 
 
 
@@ -117,7 +115,7 @@
   };
 </script>
 
-  <title> algorithm---1 | Craig's Blog </title>
+  <title> PWA 架构介绍 [译] | Craig's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -270,7 +268,7 @@
             
             
               
-                algorithm---1
+                PWA 架构介绍 [译]
               
             
           </h1>
@@ -282,8 +280,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-05-07T15:32:51+08:00" content="2017-05-07">
-              2017-05-07
+            <time itemprop="dateCreated" datetime="2018-10-09T17:21:58+08:00" content="2018-10-09">
+              2018-10-09
             </time>
           </span>
 
@@ -296,8 +294,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">algorithm</span>
+                  <a href="/categories/translation/" itemprop="url" rel="index">
+                    <span itemprop="name">translation</span>
                   </a>
                 </span>
 
@@ -329,16 +327,29 @@
       
 
       
-        <h3 id="主定理（MasterTheorem）"><a href="#主定理（MasterTheorem）" class="headerlink" title="主定理（MasterTheorem）"></a>主定理（MasterTheorem）</h3><p>设a≥1，b&gt;1为常数，f(n) 为函数，T(n) 为非负整数，且T(n) = aT(n/b) + f(n) 则有以下结果：<br><img src="http://omoi0oliz.bkt.clouddn.com/algorithm.png" alt="主定理"></p>
-<h3 id="找出n个数中第K大的数"><a href="#找出n个数中第K大的数" class="headerlink" title="找出n个数中第K大的数"></a>找出n个数中第K大的数</h3><p>采用类似快速排序算法的思想求解，从数组中随机选择一个数x，将数组分为两部分，一部分都小于x，另一部分都大于等于x.这个数x所在的位置正好是n-K的话，则返回这个数x，不然就继续找。</p>
-<p>以下是java代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Finder</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findKth</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n, <span class="keyword">int</span> K)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write code here</span></span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = n - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> re = findHelp(a, i, j);</span><br><span class="line">        <span class="keyword">int</span> temp = a[re];</span><br><span class="line">        a[re] = a[i];</span><br><span class="line">        a[i] = temp;</span><br><span class="line">        <span class="keyword">while</span> ((n - re) != K) &#123;</span><br><span class="line">            <span class="keyword">if</span> (K &gt; (n - re)) &#123;</span><br><span class="line">                j = re - <span class="number">1</span>;</span><br><span class="line">                re = findHelp(a, i, j);</span><br><span class="line">                temp = a[re];</span><br><span class="line">                a[re] = a[i];</span><br><span class="line">                a[i] = temp;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                i = re + <span class="number">1</span>;</span><br><span class="line">                re = findHelp(a, i, j);</span><br><span class="line">                temp = a[re];</span><br><span class="line">                a[re] = a[i];</span><br><span class="line">                a[i] = temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> a[re];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findHelp</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (i &gt;= j) <span class="keyword">return</span> j;</span><br><span class="line">        <span class="keyword">int</span> cc = a[i];</span><br><span class="line">        <span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">            <span class="keyword">while</span> (i &lt; j &amp;&amp; a[j] &gt; cc) &#123;</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> (i &lt; j &amp;&amp; a[i] &lt;= cc) &#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">int</span> temp = a[i];</span><br><span class="line">            a[i] = a[j];</span><br><span class="line">            a[j] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> j;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>以下是javascript代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findKth</span>(<span class="params">array, K</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> n = array.length;</span><br><span class="line">  <span class="keyword">let</span> i = <span class="number">0</span>,</span><br><span class="line">    j = n - <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">let</span> re = findHelp(array, i, j);</span><br><span class="line">  [array[i], array[re]] = [array[re], array[i]];</span><br><span class="line">  <span class="keyword">while</span> ((n - re) != K) &#123;</span><br><span class="line">    <span class="keyword">if</span> (K &gt; (n - re)) &#123;</span><br><span class="line">      j = re - <span class="number">1</span>;</span><br><span class="line">      re = findHelp(array, i, j);</span><br><span class="line">      [array[i], array[re]] = [array[re], array[i]];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      i = re + <span class="number">1</span>;</span><br><span class="line">      re = findHelp(array, i, j);</span><br><span class="line">      [array[i], array[re]] = [array[re], array[i]];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> array[re];</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">findHelp</span>(<span class="params">arr, i, j</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;= j) <span class="keyword">return</span> j;</span><br><span class="line">    <span class="keyword">let</span> cc = arr[i];</span><br><span class="line">    <span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">      <span class="keyword">while</span> (i &lt; j &amp;&amp; arr[j] &gt; cc) &#123;</span><br><span class="line">        j--;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">while</span> (i &lt; j &amp;&amp; arr[i] &lt;= cc) &#123;</span><br><span class="line">        i++;</span><br><span class="line">      &#125;</span><br><span class="line">      [arr[i], arr[j]] = [arr[j], arr[i]];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> j;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><p>根据这个算法的过程可以得到如下等式</p>
-<blockquote>
-<p>T(n) = T(n/2) + O(n)</p>
+        <blockquote>
+<p><a href="https://developers.google.com/web/ilt/pwa/introduction-to-progressive-web-app-architectures" target="_blank" rel="noopener">原文链接</a></p>
 </blockquote>
-<p>根据主定理可知，T(n) = O(n).</p>
-<p>同样也可以利用堆排序来做，虽然时间复杂度会是O(nlogK);<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 找出第K大的数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findKth</span>(<span class="params">array, K</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> cc = array.slice(<span class="number">0</span>, K);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//排成一个小顶堆,这里是自底向上</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="built_in">parseInt</span>((cc.length - <span class="number">2</span>) / <span class="number">2</span>); i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        adjustHeap(cc, i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = K; i &lt; array.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (array[i] &gt; cc[<span class="number">0</span>]) &#123;</span><br><span class="line">            cc[<span class="number">0</span>] = array[i];</span><br><span class="line">            adjustHeap(cc, <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(cc[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 调整堆，从上往下</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">adjustHeap</span>(<span class="params">arr, j</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> min;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = j; i &lt;= <span class="built_in">parseInt</span>((arr.length - <span class="number">2</span>) / <span class="number">2</span>); i = min) &#123;</span><br><span class="line">            min = <span class="number">2</span> * i + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span> (arr[<span class="number">2</span> * i + <span class="number">2</span>] &amp;&amp; arr[<span class="number">2</span> * i + <span class="number">2</span>] &lt; arr[<span class="number">2</span> * i + <span class="number">1</span>]) &#123;</span><br><span class="line">                min = <span class="number">2</span> * i + <span class="number">2</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (arr[i] &gt; arr[min]) &#123;</span><br><span class="line">                [arr[i], arr[min]] = [arr[min], arr[i]];</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>渐进式 Web Apps （ PWA ）使用现代 Web 功能提供快速、具有用户粘性和可靠的移动网络体验，这对于用户和企业来说都是十分有益的。</p>
+<p>这份文档描述了一些架构和技术，这些内容可以让你的应用支持离线可用、后台同步和推送通知。这些功能原本都是本地应用才能有的体验。</p>
+<h1 id="service-worker-和-application-shell-造就的瞬间加载"><a href="#service-worker-和-application-shell-造就的瞬间加载" class="headerlink" title="service worker 和 application shell 造就的瞬间加载"></a>service worker 和 application shell 造就的瞬间加载</h1><p>PWA 融合了很多本地应用和 Web 的优点。PWA 从浏览器标签下的页面发展为沉浸式应用，仅仅是用了普通的 HTML 和 Javascript，并且进一步增强，为用户提供了一流的类似本地应用的体验。</p>
+<p>即使用户离线或者网络不可靠的情况下，PWA 也能提供快速体验。另外，PWA 有很大潜力去融合之前只属于本地应用的功能，比如推送消息。开发一个离线可用且性能优异的 Web 应用主要依靠 service worker 和客户端存储 API （例如，Cache Storage API 或 IndexedDB ） 的混合使用。</p>
+<p><strong>service woker</strong> ：得益于 service worker 可以使用缓存和存储 API ，所以 PWA 可以预缓存一部分 Web 应用的数据，从而在用户下次开启时可以快速加载。使用 service worker 可以让你的 Web 应用拦截或处理网络请求，包括管理各种缓存，最小化数据传输，和保存用户离线操作的数据直至重新上线。这样的缓存机制可以让开发者集中关注速度，使得本地应用上常见的瞬时加载和定期更新同样出现在 PWA 上。如果你不熟悉 service worker，请阅读之前的文章。</p>
+<p>service worker 不需要用户操作，不需要在打开的页面中也能执行自身的功能。这就催生出了新服务，比如推送消息或离线采集用户操作然后上线再发送。（这不太可能使你的应用程序膨胀，因为浏览器会根据需要启动和停止 service worker 来管理内存）</p>
+<p>service worker 提供的服务如下：</p>
+<ul>
+<li><p>拦截 HTTP/HTTPS 请求，因此你的应用可以从缓存、本地存储或网络中做出决定来提供什么样的服务。</p>
+<p>service worker 不能接触 DOM 但是它可以使用 Cache Storage API，使用 Fetch API 来发送网络请求，使用 IndexedDB API 来做持久化存储。除去拦截网络请求，service worker 还可以使用 <code>postMessage()</code> 来和其他 service worker 和它控制的页面进行通信。（例如要求更新 DOM ）  </p>
+</li>
+<li><p>从服务器接受推送消息</p>
+<p>service worker 独立运行于其他 Web 应用之外，并提供底层操作系统的钩子。它能响应来自操作系统的事件，包括推送消息。</p>
+</li>
+<li><p>让用户在离线情况下依然可以使用 PWA 应用，直到浏览器恢复网络才执行一系列用户的操作。（这也就是后台同步）</p>
+<p>将 service worker 想象成应用的管家，被需要的时候就会醒过来，然后执行任务。实际上，service worker 是浏览器的后台事件处理程序。service worker 的生命周期比较短。它只会在接收到事件的时候醒来，然后只运行必要的时间去处理这个事件。</p>
+</li>
+</ul>
+<p>缓存的概念是令人兴奋的，因为这可以让用户体验离线操作，而且给了开发者足够的控制权去控制什么是真正的离线体验。但是，为了充分发挥 service worker 的优点并融入越来越多的 PWA 功能，是需要一个新思路，即利用 application shell 的架构来创建 Web 站点。</p>
+<a id="more"></a>
 
       
     </div>
@@ -360,7 +371,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/algorithm/" rel="tag">#algorithm</a>
+            <a href="/tags/translation/" rel="tag">#translation</a>
           
         </div>
       
@@ -369,17 +380,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/26/闭包和匿名函数/" rel="next" title="闭包和匿名函数">
-                <i class="fa fa-chevron-left"></i> 闭包和匿名函数
+              <a href="/2018/10/06/[译] 使用Fetch/" rel="next" title="使用Fetch [译]">
+                <i class="fa fa-chevron-left"></i> 使用Fetch [译]
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/06/27/algorithm2/" rel="prev" title="algorithm---2">
-                algorithm---2 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -537,7 +544,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#主定理（MasterTheorem）"><span class="nav-number">1.</span> <span class="nav-text">主定理（MasterTheorem）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找出n个数中第K大的数"><span class="nav-number">2.</span> <span class="nav-text">找出n个数中第K大的数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间复杂度"><span class="nav-number">3.</span> <span class="nav-text">时间复杂度</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#service-worker-和-application-shell-造就的瞬间加载"><span class="nav-number">1.</span> <span class="nav-text">service worker 和 application shell 造就的瞬间加载</span></a></li></ol></div>
             
           </div>
         </section>
