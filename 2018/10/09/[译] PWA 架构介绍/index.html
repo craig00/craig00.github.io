@@ -94,10 +94,12 @@
 <meta property="og:site_name" content="Craig&#39;s Blog">
 <meta property="og:description" content="原文链接  渐进式 Web Apps （ PWA ）使用现代 Web 功能提供快速、具有用户粘性和可靠的移动网络体验，这对于用户和企业来说都是十分有益的。 这份文档描述了一些架构和技术，这些内容可以让你的应用支持离线可用、后台同步和推送通知。这些功能原本都是本地应用才能有的体验。 service worker 和 application shell 造就的瞬间加载PWA 融合了很多本地应用和 W">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-11T09:08:28.856Z">
+<meta property="og:image" content="https://developers.google.com/web/ilt/pwa/img/c9f7d527c81ed1a1.png">
+<meta property="og:updated_time" content="2018-10-16T08:32:13.673Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PWA 架构介绍 [译]">
 <meta name="twitter:description" content="原文链接  渐进式 Web Apps （ PWA ）使用现代 Web 功能提供快速、具有用户粘性和可靠的移动网络体验，这对于用户和企业来说都是十分有益的。 这份文档描述了一些架构和技术，这些内容可以让你的应用支持离线可用、后台同步和推送通知。这些功能原本都是本地应用才能有的体验。 service worker 和 application shell 造就的瞬间加载PWA 融合了很多本地应用和 W">
+<meta name="twitter:image" content="https://developers.google.com/web/ilt/pwa/img/c9f7d527c81ed1a1.png">
 
 
 
@@ -350,6 +352,90 @@
 </ul>
 <p>缓存的概念是令人兴奋的，因为这可以让用户体验离线操作，而且给了开发者足够的控制权去控制什么是真正的离线体验。但是，为了充分发挥 service worker 的优点并融入越来越多的 PWA 功能，是需要一个新思路，即利用 application shell 的架构来创建 Web 站点。</p>
 <a id="more"></a>
+<p>Application Shell (app shell)：PWA 倾向于围绕 app shell 进行架构的。这其中包含了一些本地资源，用于 Web 应用加载用户界面框架，以此来使得 PWA 离线可用并且使用 JavaScript 填充其内容。如果 app shell 已经被 service worker 缓存，那么重复访问 app shell 将可以在没有网络的情况下也能在屏幕上展示丰富的内容。在构建 PWA 应用时，使用 app shell 不是硬性要求，但是如果缓存正确，提供的服务恰当，那么它可以带来非常显著的性能提升。</p>
+<p><strong>app shell 是什么</strong> 在下文将详细介绍如何使用 app shell，同样非常建议使用 app shell 来升级现有的单页应用（SPA)和构建 PWA。这个架构提供了连接弹性，它使得 PWA 的使用体验和原生应用类似，并提供了类似原生应用的交互和导航，还有可靠的性能。</p>
+<blockquote>
+<p>注意：如果你的站点是一个模板站点（比如站点内容是使用各种模板混合实际文字、图片和其他资源），那么建议阅读 Jeffrey Posnick 的 <a href="https://jeffy.info/2016/11/02/offline-first-for-your-templated-site-part-1.html" target="_blank" rel="noopener">Offline-first for Your Templated Site</a> ，以此来了解为模板站点提供服务和缓存的不同策略。</p>
+</blockquote>
+<p>service worker 的缓存应当被视为渐进增强的。如果你的 Web 应用遵守 service worker 只在浏览器支持的情况下再进行注册，那么你可以使用 service worker 体验离线可用的用户体验。如果浏览器不支持 service worker，那么离线可用的相关代码将永远不会被调用，因此也不会有任何开销或破坏。</p>
+<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><p>使用 app shell 依赖于利用 service worker 来缓存 Web 站点的 ‘shell’ 。使用 <strong>app shell</strong> 和 <strong>dynamic content model</strong> 大幅提升了应用的性能，并且配合使用 service worker 来作为一个渐进增强的功能点，体验效果非常好。渐进增强 Web 站点意味着站点可以添加功能，如离线缓存，推送通知和安装到桌面等功能。</p>
+<p>下面简要概括下它是如何工作的：  </p>
+<ol>
+<li><p>当用户进入你的站点，基础的 HTML，JavaScript 和 CSS 开始展示。</p>
+<p>第一次进入页面的时候，页面注册 service worker 从而控制这个站点未来的导航。注册创建了一个新的 service worker 实例，然后触发了 service worker 会响应的事件 <code>install</code> 。当 service worker 注册完，app shell 的内容会被添加到缓存中。一旦注册，service worker 会控制站点上未来的导航。注意到你可以通过浏览器开发者工具或 service worker API 来手动激活新的 service worker。</p>
+</li>
+<li><p>在 shell 内容加载完毕后，应用会请求内容来填充视口。app shell 加上动态内容就是完整呈现的页面。</p>
+<p>然后，SPA 会发起请求（比如通过 <code>XMLHttpRequest</code> 或 Fetch API），收到内容后会填充视口。每个请求都会触发 service worker内部的 <code>fetch</code> 事件，你可以选择任何方式处理它。一旦这些处理都完成了，那么 service worker 将会进入一个空闲状态。所以，service worker 会一直空闲直到一个新的网络请求触发一个新事件。作为网络请求的回应，<code>fetch</code> 事件处理函数可以根据你的设置随意拦截请求和响应。在 service worker 空闲一段时间之后，它就会自动停止，然后当页面再次加载并发生了下一个请求时，service worker 会重新启动并快速响应 <code>fetch</code> 事件。</p>
+</li>
+</ol>
+<p><img src="https://developers.google.com/web/ilt/pwa/img/c9f7d527c81ed1a1.png" alt="life circle"></p>
+<blockquote>
+<p>注意：对于给定版本的 service worker ，注册激活之后，如有必要，过往不再需要的过时缓存资源将会被清除。这对于给定版本的 service worker js 文件来说，只会发生一次。</p>
+</blockquote>
+<p><strong>浏览器不支持 service worker 怎么办？</strong></p>
+<p>app shell 模型是非常棒的，但是如果浏览器不支持 service worker 的话，那该怎么办呢？不用慌！Web 应用仍然可以被加载即使浏览器不支持 service worker。加载 UI 界面必须的东西是一样的（例如，HTML，CSS，JavaScript），不管 service worker 是否有被使用。service worker 只是将类似原生应用的特性加到了 Web 应用上而已。没有 service worker，Web 应用依然可以运行，只是将缓存资源变成了 HTTPS 请求。换句话说，service worker 不支持的时候，静态资源不是离线缓存的，而是通过网络获取，因此用户依然能有一个基本可用的版本。</p>
+<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><table>
+<thead>
+<tr>
+<th>组件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>app shell</td>
+<td>除去页面中的特定内容之外，页面结构需要的最少的 HTML，CSS，JavaScript 和任意其他静态资源。</td>
+</tr>
+<tr>
+<td>cache</td>
+<td>浏览器中有两种类型的缓存：浏览器自身管理的缓存和应用管理的缓存（service worker）。<br> <br> <strong>浏览器管理的缓存</strong> 是电脑临时存储文件的地方，这些文件是浏览器下载下来用于展示站点用的，其中包括任何可以填充站点的内容，比如 HTML 文件，CSS 样式表，JavaScript 脚本，图片和其他多媒体文件。这种缓存是浏览器自动管理的，并且不是离线可用的。<br> <br> <strong>应用管理的缓存</strong> 是使用 Cache API 创建的，独立于浏览器管理的缓存之外。这个 API 可以被应用（通过 window.caches）和 service worker 使用。应用管理的缓存可缓存的文件类型和浏览器一样，但它是可以离线使用的（通过 service worker 启用离线可用功能）。这种缓存是开发者管理的，在脚本中使用 Cache API 精确更新已命名的缓存对象中的某些内容。<br> <br> 缓存是你构建应用的好帮手，只要你的缓存对这些资源来说是合适的就行。在 PWA 缓存机制教程中有一些缓存策略可供查看。</td>
+</tr>
+<tr>
+<td>客户端渲染</td>
+<td>客户端渲染意味着浏览器中运行的 JavaScript 负责产出 HTML（大概率是通过模板）。这就可以让你在用户点击的时候瞬间更新界面，而不是等几百毫秒去询问服务器再更新内容。多数站点里的内容和静态资源都是可以不用服务器端渲染。只要页面中任何部分是用到动画或高交互行为的（可拖动的滑块，可排序的表格，可下拉的菜单），基本都是使用客户端渲染完成的。</td>
+</tr>
+<tr>
+<td>动态内容</td>
+<td>动态内容是指 Web 应用正常工作所需要的所有数据，图片和其他资源等，这些是独立于 app shell 之外的。尽管 app shell 倾向于快速填充站点的内容，但是用户可能也会期待动态内容的出现，因此你的应用必须去请求相应的资源来满足用户的需求。有时候，动态内容会取自另外的第三方 API ，当然也有一些自身的数据会动态产生或频繁更新。</td>
+</tr>
+<tr>
+<td>Fetch API</td>
+<td>你可以自己选择性实现 Fetch API 来帮助 service worker 获取数据。举个例子来说，如果你的 Web 应用主体是新闻，那么你就需要充分利用自己的 API 去获取最新的文章，然后用第三方 API 去获取当前天气。这两种请求类型的内容都是归属于动态内容下。</td>
+</tr>
+<tr>
+<td>渐进增强</td>
+<td>这是一种 Web 开发方式，首先针对普通浏览器特性进行开发，然后针对支持现代技术的浏览器会添加功能或增强功能。</td>
+</tr>
+<tr>
+<td>PWA 架构风格</td>
+<td>指的是任意一种基于可用后端技术和性能需求来构建 PWA 的方法。这些模式包括使用 app shell，服务器端渲染，客户端渲染和其他等等。这些内容在 <a href="https://developers.google.com/web/ilt/pwa/introduction-to-progressive-web-app-architectures#patterns" target="_blank" rel="noopener">PWA Architectural Patterns</a> 有详细说明。</td>
+</tr>
+<tr>
+<td>服务器端渲染（SSR）</td>
+<td>服务器端渲染指的是当浏览器导航至一个 URL 然后获取页面，浏览器立马取回描述页面的 HTML 。SSR非常好，因为页面加载更快了（这可以是整个页面的服务器渲染版本，app shell 或内容）。因此也就可以在下载渲染代码和解析代码的时候避免白屏的出现。如果渲染内容在服务器端，那么即使在不好的网络条件下，JavaScript文件资源还没有完全获取并解析，用户也可以在界面上得到有意义的文字。SSR 很好地维持了页面就是文档的概念，如果你使用 URL 向服务器询问一份文档，然后文档内容就会返回，而不是返回一个使用复杂 API 产生文字的程序。</td>
+</tr>
+<tr>
+<td>service worker</td>
+<td>Web worker 的一种，和 Web 应用一起工作，它的生命周期是和 app 的事件执行是绑定的关系。有些 service 包含 JavaScript 写的网络代理，用来拦截网页发出的 HTTP/HTTPs 请求。它同样可以接收推送消息。另外的特性已经在计划中。</td>
+</tr>
+<tr>
+<td>sw-precache</td>
+<td>这个模块集成在构建过程中，并产生代码用来缓存和维持 app shell 中的所有资源。</td>
+</tr>
+<tr>
+<td>sw-toolbox</td>
+<td>这个工具库是 service worker 运行时加载的，并提供事先写好的工具，这些工具主要用于将常见的缓存策略应用于不同的 URL 模式。</td>
+</tr>
+<tr>
+<td>通用 JavaScript 渲染</td>
+<td>通用或同构 JavaScript 应用拥有客户端和服务器都能运行的代码。这就意味着一些代码逻辑可以同时跑在客户端和服务器。这也同样意味着拥有更好的性能去展现第一屏和更多状态信息。同构应用在路由（理想情况下，有一组唯一的路由将 URI 模式映射到路由处理程序），数据获取（这是指组件资源，不管获取机制是怎样的，它们都可以在服务器和客户端上呈现）和视图渲染（视图必须依照应用的需要既可以在服务器端渲染，也可以在客户端渲染）。</td>
+</tr>
+<tr>
+<td>Web app manifest</td>
+<td>app shell 是通过 Web app manifest 部署的，这是个简单的 JSON 文件用来控制应用是如何启动并展现给用户的（这个一般被命名为 <strong>manifest.json</strong> )。当 PWA 应用第一次连接网络的时候，浏览器就会读取 manifest 文件，下载指定的资源并保存到本地。然后如果离线没有网络连接，浏览器可以使用本地缓存来展示应用。<br><br> <strong>注意：</strong> 不要和 appcache 使用的 <strong>.manifest</strong> 文件混淆了。PWA 应该使用 service worker 来实现缓存，使用 Web app manifest 来启用 “添加至桌面” 和消息推送。</td>
+</tr>
+</tbody>
+</table>
 
       
     </div>
@@ -544,7 +630,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#service-worker-和-application-shell-造就的瞬间加载"><span class="nav-number">1.</span> <span class="nav-text">service worker 和 application shell 造就的瞬间加载</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#service-worker-和-application-shell-造就的瞬间加载"><span class="nav-number">1.</span> <span class="nav-text">service worker 和 application shell 造就的瞬间加载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#核心概念"><span class="nav-number">1.1.</span> <span class="nav-text">核心概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件"><span class="nav-number">1.2.</span> <span class="nav-text">组件</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
